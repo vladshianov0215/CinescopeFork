@@ -5,7 +5,9 @@ import requests
 from constants import BASE_URL, REGISTER_ENDPOINT, LOGIN_ENDPOINT
 from custom_requester.custom_requester import CustomRequester
 from utils.data_generator import DataGenerator
-
+from api.auth_api import AuthAPI
+from api.user_api import UserAPI
+from api.api_manager import ApiManager
 
 faker = Faker()
 
@@ -52,3 +54,37 @@ def requester():
     """
     session = requests.Session()
     return CustomRequester(session=session, base_url=BASE_URL)
+
+
+@pytest.fixture(scope="session")
+def auth_api(requester):
+    """
+    Фикстура для работы с AuthAPI.
+    """
+    return AuthAPI(session=requester)
+
+
+
+@pytest.fixture(scope="session")
+def user_api(requester):
+    """
+    Фикстура для работы с UserAPI.
+    """
+    return UserAPI(session=requester)
+
+@pytest.fixture(scope="session")
+def session():
+    """
+    Фикстура для создания HTTP-сессии.
+    """
+    http_session = requests.Session()
+    yield http_session
+    http_session.close()
+
+
+@pytest.fixture(scope="session")
+def api_manager(session):
+    """
+    Фикстура для создания экземпляра ApiManager.
+    """
+    return ApiManager(session)
