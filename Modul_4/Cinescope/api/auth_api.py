@@ -1,5 +1,5 @@
-from custom_requester.custom_requester import CustomRequester
-from constants import LOGIN_ENDPOINT, REGISTER_ENDPOINT
+from Modul_4.Cinescope.custom_requester.custom_requester import CustomRequester
+from Modul_4.Cinescope.constants import LOGIN_ENDPOINT, REGISTER_ENDPOINT
 
 class AuthAPI(CustomRequester):
     """

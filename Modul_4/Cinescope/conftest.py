@@ -2,12 +2,12 @@
 from faker import Faker
 import pytest
 import requests
-from constants import BASE_URL, REGISTER_ENDPOINT, LOGIN_ENDPOINT
-from custom_requester.custom_requester import CustomRequester
-from utils.data_generator import DataGenerator
-from api.auth_api import AuthAPI
-from api.user_api import UserAPI
-from api.api_manager import ApiManager
+from Modul_4.Cinescope.constants import BASE_URL, REGISTER_ENDPOINT, LOGIN_ENDPOINT
+from Modul_4.Cinescope. custom_requester.custom_requester import CustomRequester
+from Modul_4.Cinescope.utils.data_generator import DataGenerator
+from Modul_4.Cinescope.api.auth_api import AuthAPI
+# from Modul_4.Cinescope.api.user_api import UserAPI
+from Modul_4.Cinescope.api.api_manager import ApiManager
 
 faker = Faker()
 
@@ -65,12 +65,12 @@ def auth_api(requester):
 
 
 
-@pytest.fixture(scope="session")
-def user_api(requester):
-    """
-    Фикстура для работы с UserAPI.
-    """
-    return UserAPI(session=requester)
+# @pytest.fixture(scope="session")
+# def user_api(requester):
+#     """
+#     Фикстура для работы с UserAPI.
+#     """
+#     return UserAPI(session=requester)
 
 @pytest.fixture(scope="session")
 def session():

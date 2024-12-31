@@ -3,11 +3,6 @@ import requests
 import logging
 import os
 
-import json
-import requests
-import logging
-import os
-
 class CustomRequester:
     """
     Кастомный реквестер для стандартизации и упрощения отправки HTTP-запросов.
