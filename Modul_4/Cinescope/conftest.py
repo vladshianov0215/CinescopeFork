@@ -28,63 +28,26 @@ def test_user():
         "roles": ["USER"]
     }
 @pytest.fixture(scope="session")
-def registered_user(requester, test_user):
+def registered_user(api_manager, test_user):
     """
-    Фикстура для регистрации и получения данных зарегистрированного пользователя.
+    Фикстура для регистрации пользователя через auth_api.
     """
-    # Регистрируем пользователя
-    response = requester.send_request(
-        method="POST",
-        endpoint=REGISTER_ENDPOINT,
-        data=test_user,
-        expected_status=201
-    )
+    response = api_manager.auth_api.register_user(test_user)
     response_data = response.json()
+    test_user["id"] = response_data["id"]
+    return test_user
 
-    # Обновляем данные пользователя (включаем ID из ответа регистрации)
-    registered_user = test_user.copy()
-    registered_user["id"] = response_data["id"]
 
-    return registered_user
 
-@pytest.fixture(scope="session")
-def requester():
-    """
-    Фикстура для создания экземпляра CustomRequester.
-    """
-    session = requests.Session()
-    return CustomRequester(session=session, base_url=BASE_URL)
 
 
 @pytest.fixture(scope="session")
-def auth_api(requester):
-    """
-    Фикстура для работы с AuthAPI.
-    """
-    return AuthAPI(session=requester)
-
-
-
-# @pytest.fixture(scope="session")
-# def user_api(requester):
-#     """
-#     Фикстура для работы с UserAPI.
-#     """
-#     return UserAPI(session=requester)
-
-@pytest.fixture(scope="session")
-def session():
-    """
-    Фикстура для создания HTTP-сессии.
-    """
-    http_session = requests.Session()
-    yield http_session
-    http_session.close()
-
-
-@pytest.fixture(scope="session")
-def api_manager(session):
+def api_manager():
     """
     Фикстура для создания экземпляра ApiManager.
     """
-    return ApiManager(session)
+    session = requests.Session()
+    yield ApiManager(session)
+    session.close()
+
+
