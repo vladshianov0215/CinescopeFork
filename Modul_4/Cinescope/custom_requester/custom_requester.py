@@ -13,13 +13,14 @@ class CustomRequester:
         "Accept": "application/json"
     }
 
-    def __init__(self, session, base_url):
+    def __init__(self, session: object, base_url: object) -> object:
         """
         Инициализация кастомного реквестера.
         :param session: Объект requests.Session.
         :param base_url: Базовый URL API.
         """
         self.base_url = base_url
+        self.session = session #
         self.headers = self.base_headers.copy()
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
