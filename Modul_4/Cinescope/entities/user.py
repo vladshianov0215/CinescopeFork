@@ -2,15 +2,13 @@
 from Modul_4.Cinescope.entities.roles import Role
 
 class User:
-    def __init__(self, username, password, api_manager, roles):
-        self.username = username
+    def __init__(self, email: str, password: str, roles: list, api_manager):
+        self.email = email
         self.password = password
-        self.api_manager = api_manager
-        self.roles = [Role(role) for role in roles]
+        self.roles = roles
+        self.api_manager = api_manager  # Экземпляр API Manager для запросов
 
     @property
     def creds(self):
-        """
-        Возвращает учетные данные пользователя.
-        """
-        return {"email": self.username, "password": self.password}
+        """Возвращает кортеж (email, password)"""
+        return self.email, self.password

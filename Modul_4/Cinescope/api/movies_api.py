@@ -31,20 +31,20 @@ class MoviesAPI:
             expected_status=expected_status
         )
 
-    def create_movie(self, data, token):
+    def create_movie(self, data, headers):
         """
         Создание нового фильма.
         :param data: Данные фильма.
-        :param token: Токен авторизации.
+        :param headers: Заголовки запроса.
         :return: Ответ от API.
         """
-        headers = {"Authorization": f"Bearer {token}"}
+        print(f"🔍 Отправка запроса на {self.requester.base_url}/movies с данными {data}")
         return self.requester.send_request(
             method="POST",
             endpoint="/movies",
             data=data,
             headers=headers,
-            expected_status=201  # Указываем ожидаемый статус-код 201
+            expected_status=[201, 403]  # Ожидаем 403 для ролей без доступа
         )
 
     def delete_movie(self, movie_id, token):

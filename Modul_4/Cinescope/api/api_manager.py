@@ -15,13 +15,3 @@ class ApiManager:
         """
         self.auth_api = AuthAPI(auth_requester)
         self.movies_api = MoviesAPI(movies_requester)
-
-    def __getattr__(self, item):
-        """
-        Позволяет обращаться к API-клиентам через атрибуты.
-        :param item: Название API-клиента.
-        :return: Экземпляр API-клиента.
-        """
-        if item in self.api_clients:
-            return self.api_clients[item]
-        raise AttributeError(f"No API client named '{item}' in ApiManager.")
