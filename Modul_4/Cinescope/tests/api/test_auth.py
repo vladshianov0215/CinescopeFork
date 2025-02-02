@@ -14,6 +14,7 @@ class TestAuthAPI:
 
         # Проверки
         assert response_data["email"] == test_user["email"], "Email не совпадает"
+        assert "id" in response_data, "ID пользователя отсутствует в ответе"
         assert "roles" in response_data, "Роли пользователя отсутствуют в ответе"
         assert "USER" in response_data["roles"], "Роль USER должна быть у пользователя"
 
