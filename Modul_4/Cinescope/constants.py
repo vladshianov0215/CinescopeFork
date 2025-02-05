@@ -1,7 +1,9 @@
 import os
 
+
 BASE_URL = "https://auth.dev-cinescope.store"
 USER_BASE_URL = "https://users.dev-cinescope.store"
+
 
 HEADERS = {
     "Content-Type": "application/json",

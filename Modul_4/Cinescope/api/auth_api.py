@@ -5,12 +5,14 @@ class AuthAPI:
     Класс для работы с аутентификацией.
     """
 
+
     def __init__(self, requester: CustomRequester):
         """
         Инициализация AuthAPI.
         :param requester: Экземпляр CustomRequester для отправки запросов.
         """
         self.requester = requester  # ✅ Сохраняем экземпляр CustomRequester
+
 
     def register_user(self, user_data):
         """Регистрирует нового пользователя"""
