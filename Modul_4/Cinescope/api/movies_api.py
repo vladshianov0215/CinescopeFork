@@ -1,14 +1,17 @@
+from Modul_4.Cinescope.custom_requester.custom_requester import CustomRequester
+
 
 class MoviesAPI:
     """
     Класс для работы с Movies API.
     """
-    def __init__(self, requester):
+
+    def __init__(self, requester: CustomRequester):
         """
         Инициализация MoviesAPI.
         :param requester: Экземпляр CustomRequester.
         """
-        self.requester = requester
+        self.requester = requester  # ✅ Теперь используем композицию
 
     def get_movies(self, params=None):
         """
@@ -38,7 +41,6 @@ class MoviesAPI:
         :param headers: Заголовки запроса.
         :return: Ответ от API.
         """
-        print(f"🔍 Отправка запроса на {self.requester.base_url}/movies с данными {data}")
         return self.requester.send_request(
             method="POST",
             endpoint="/movies",

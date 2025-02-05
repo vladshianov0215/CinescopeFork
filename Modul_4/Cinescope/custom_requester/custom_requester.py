@@ -20,7 +20,7 @@ class CustomRequester:
         :param base_url: Базовый URL API.
         """
         self.base_url = base_url
-        self.session = session #
+        self.session = session
         self.headers = self.base_headers.copy()
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
@@ -41,7 +41,7 @@ class CustomRequester:
         url = f"{self.base_url}{endpoint}"
         request_headers = {**self.headers, **(headers or {})}
 
-        response = requests.request(
+        response = self.session.request(
             method=method,
             url=url,
             json=data,

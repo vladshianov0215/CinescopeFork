@@ -1,5 +1,3 @@
-import time
-
 import pytest
 
 from Modul_4.Cinescope.utils.data_generator import DataGenerator
@@ -35,7 +33,8 @@ class TestRoleBasedAccess:
         assert role in updated_user["roles"], f"Ошибка: у пользователя нет роли {role} после обновления."
 
         # 🔄 Перелогиниваемся после смены роли
-        new_token_response = api_manager.auth_api.login(user["email"], user["password"])
+        new_token_response = api_manager.auth_api.login_user(
+            {"email": user["email"], "password": user["password"]}).json()
         new_token = new_token_response.get("accessToken")
 
         assert new_token, "Ошибка: не удалось получить новый токен после обновления роли."

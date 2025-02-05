@@ -11,11 +11,9 @@ from Modul_4.Cinescope.entities.user import User
 from Modul_4.Cinescope.enums.roles import Roles
 from Modul_4.Cinescope.utils.data_generator import DataGenerator
 from Modul_4.Cinescope.api.auth_api import AuthAPI
-# from Modul_4.Cinescope.api.user_api import UserAPI
 from Modul_4.Cinescope.api.api_manager import ApiManager
 from Modul_4.Cinescope.utils.user_data import UserData
 
-faker = Faker()
 
 @pytest.fixture(scope="session")
 def test_user():
@@ -74,7 +72,6 @@ def super_admin_token(api_manager):
     assert response.status_code == 200, "Не удалось авторизоваться как супер-админ"
     return response.json()["accessToken"]
 
-
 @pytest.fixture
 def user_create(api_manager, super_admin):
     """Фикстура для создания пользователей с разными ролями."""
@@ -119,15 +116,6 @@ def user_create(api_manager, super_admin):
             print(f"⚠️ Ошибка при удалении пользователя {user_id}: {e}")
 
 
-
-
-
-
-
-
-
-
-
 @pytest.fixture(scope="session")
 def api_manager():
     """Фикстура для создания экземпляра ApiManager"""
@@ -147,24 +135,6 @@ def api_manager():
     return api_manager_instance
 
 
-
-
-# @pytest.fixture(scope="session")
-# def api_manager(session):
-#     """
-#     Фикстура для создания ApiManager с разными базовыми URL.
-#     """
-#     auth_requester = CustomRequester(
-#         session=session,
-#         base_url="https://auth.dev-cinescope.coconutqa.ru"
-#     )
-#     movies_requester = CustomRequester(
-#         session=session,
-#         base_url="https://api.dev-cinescope.coconutqa.ru"
-#     )
-#     return ApiManager(auth_requester, movies_requester)
-
-
 @pytest.fixture
 def movie_data():
     """
@@ -178,8 +148,6 @@ def movie_data():
         "published": True,
         "genreId": 1  # Исправлено значение genreId
     }
-
-
 
 
 @pytest.fixture(scope="session")
