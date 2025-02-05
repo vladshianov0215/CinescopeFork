@@ -39,3 +39,15 @@ class DataGenerator:
         random.shuffle(password)
 
         return ''.join(password)
+
+    @staticmethod
+    def generate_funny_movie_title():
+        """
+        Генерирует случайное смешное название фильма с припиской "_AQA_".
+        """
+        adjectives = ["Безумный", "Грозный", "Неожиданный", "Хитрый", "Таинственный", "Взрывной"]
+        nouns = ["Кот", "Банан", "Робот", "Джедай", "Грузовик", "Хакер"]
+        actions = ["прыгает", "хохочет", "летает", "сражается", "исчезает", "танцует"]
+
+        title = f"{random.choice(adjectives)} {random.choice(nouns)} {random.choice(actions)}_AQA_"
+        return title

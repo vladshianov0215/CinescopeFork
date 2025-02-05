@@ -13,33 +13,56 @@ class CustomRequester:
         "Accept": "application/json"
     }
 
-    def __init__(self, session, base_url):
+    def __init__(self, session: object, base_url: object) -> object:
         """
         Инициализация кастомного реквестера.
         :param session: Объект requests.Session.
         :param base_url: Базовый URL API.
         """
         self.base_url = base_url
+        self.session = session
         self.headers = self.base_headers.copy()
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
 
-    def send_request(self, method, endpoint, data=None, expected_status=200, need_logging=True):
+    def send_request(self, method, endpoint, data=None, params=None, headers=None, expected_status=None,
+                     need_logging=True):
         """
         Универсальный метод для отправки запросов.
         :param method: HTTP метод (GET, POST, PUT, DELETE и т.д.).
         :param endpoint: Эндпоинт (например, "/login").
         :param data: Тело запроса (JSON-данные).
-        :param expected_status: Ожидаемый статус-код (по умолчанию 200).
+        :param params: Параметры запроса для методов типа GET.
+        :param headers: Дополнительные заголовки.
+        :param expected_status: Ожидаемые статус-коды (может быть числом или списком).
         :param need_logging: Флаг для логирования (по умолчанию True).
         :return: Объект ответа requests.Response.
         """
         url = f"{self.base_url}{endpoint}"
-        response = requests.request(method, url, json=data, headers=self.headers)
+        request_headers = {**self.headers, **(headers or {})}
+
+        response = self.session.request(
+            method=method,
+            url=url,
+            json=data,
+            params=params,
+            headers=request_headers
+        )
+
         if need_logging:
             self.log_request_and_response(response)
-        if response.status_code != expected_status:
-            raise ValueError(f"Unexpected status code: {response.status_code}. Expected: {expected_status}")
+
+        # Если expected_status не задан, используем стандартные успешные статусы
+        if expected_status is None:
+            expected_status = [200, 201, 204]
+
+        # Если передан один код, превращаем его в список
+        if isinstance(expected_status, int):
+            expected_status = [expected_status]
+
+        if response.status_code not in expected_status:
+            raise ValueError(f"Unexpected status code: {response.status_code}. Expected one of: {expected_status}")
+
         return response
 
     def _update_session_headers(self, session, **kwargs):
