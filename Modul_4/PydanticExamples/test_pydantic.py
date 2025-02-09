@@ -189,8 +189,5 @@ def main():# раскоментировав различные тесты в в�
     # logger.info("\====================test_bad_product_model====================\n")
     # test_bad_product_model()
 
-
 if __name__ == "__main__":
     main()
-
-
