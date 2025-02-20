@@ -3,6 +3,14 @@ import string
 
 class DataGenerator:
     @staticmethod
+    def generate_random_str(strlen: int):
+        return ''.join(random.choices(string.ascii_lowercase + string.digits, k=strlen))
+
+    @staticmethod
+    def generate_random_int(intlen: int):
+        return int(''.join(random.choices(string.digits, k=intlen)))
+    
+    @staticmethod
     def generate_random_email():
         random_string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=9))
         return f"kewkk{random_string}@gmail.com"

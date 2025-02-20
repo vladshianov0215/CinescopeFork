@@ -4,3 +4,5 @@ faker
 pydantic
 jsonschema
 pytest-mock
+sqlalchemy 
+psycopg2

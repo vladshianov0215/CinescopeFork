@@ -1,3 +1,4 @@
+import datetime
 import uuid
 
 from faker import Faker
@@ -7,6 +8,7 @@ import requests
 from Modul_4.Cinescope.api.movies_api import MoviesAPI
 from Modul_4.Cinescope.constants import BASE_URL, REGISTER_ENDPOINT, LOGIN_ENDPOINT
 from Modul_4.Cinescope. custom_requester.custom_requester import CustomRequester
+from Modul_4.Cinescope.db_requester.models import UserDBModel
 from Modul_4.Cinescope.entities.user import User
 from Modul_4.Cinescope.enums.roles import Roles
 from Modul_4.Cinescope.utils.data_generator import DataGenerator
@@ -14,6 +16,53 @@ from Modul_4.Cinescope.api.auth_api import AuthAPI
 from Modul_4.Cinescope.api.api_manager import ApiManager
 from Modul_4.Cinescope.utils.user_data import UserData
 from Modul_4.Cinescope.models.base_models import TestUser
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+
+#Оставим эти данные тут для наглядности. но не стоит хранить креды в гитлбе. они должны быть заданы через env 
+HOST = "92.255.111.76"
+PORT = 31200
+DATABASE_NAME = "db_movies"
+USERNAME = "postgres"
+PASSWORD = "AmwFrtnR2"
+
+engine = create_engine(f"postgresql+psycopg2://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DATABASE_NAME}") # Создаем движок (engine) для подключения к базе данных
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine) # Создаем фабрику сессий
+
+@pytest.fixture(scope="module")
+def db_session():
+    """
+    Фикстура с областью видимости module.
+    Тестовые данные создаются один раз для всех тестов в модуле.
+    """
+    session = SessionLocal()
+
+    # # Создаем тестовые данные
+    # test_user = UserDBModel(
+    #     id = "test_id",
+    #     email = DataGenerator.generate_random_email(),
+    #     full_name = DataGenerator.generate_random_name(),
+    #     password = DataGenerator.generate_random_password(),
+    #     created_at = datetime.datetime.now(),
+    #     updated_at = datetime.datetime.now(),
+    #     verified = False,
+    #     banned = False,
+    #     roles = "{USER}"
+    # )
+    # session.add(test_user)
+    # session.commit()
+
+    yield session # можете запустить тесты в дебаг режиме и поставить тут брекпойнт
+                  # зайдите в базу и убедитесь что нывй обьект был создан
+
+    # Удаляем тестовые данные
+    # session.delete(test_user)
+    # session.commit()
+
+    # закрываем сессиию
+    session.close()
 
 
 @pytest.fixture(scope="session")
