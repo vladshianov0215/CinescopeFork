@@ -3,6 +3,7 @@ import uuid
 
 from faker import Faker
 import pytest
+import time
 import requests
 
 from Modul_4.Cinescope.api.movies_api import MoviesAPI
@@ -31,6 +32,12 @@ PASSWORD = "AmwFrtnR2"
 engine = create_engine(f"postgresql+psycopg2://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DATABASE_NAME}") # Создаем движок (engine) для подключения к базе данных
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine) # Создаем фабрику сессий
 
+@pytest.fixture
+def delay_between_retries():
+    time.sleep(2)  # Задержка в 2 секунды\ это не обязательно но 
+    yield          # нужно понимать что такая возможность имеется
+        
+        
 @pytest.fixture(scope="module")
 def db_session():
     """

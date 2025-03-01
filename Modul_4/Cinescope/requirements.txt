@@ -6,3 +6,7 @@ jsonschema
 pytest-mock
 sqlalchemy 
 psycopg2
+allure-pytest
+allure-python-commons
+pytest-check
+pytest-rerunfailures
