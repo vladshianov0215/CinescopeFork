@@ -1,7 +1,7 @@
 pytest
 requests
 faker
-pydantic
+pydantic"
 jsonschema
 pytest-mock
 sqlalchemy 
@@ -10,3 +10,4 @@ allure-pytest
 allure-python-commons
 pytest-check
 pytest-rerunfailures
+playwright

@@ -96,7 +96,7 @@ def registered_user(api_manager, test_user: TestUser):# указали тип Te
     """
     response = api_manager.auth_api.register_user(test_user)
     response_data = response.json()
-    test_user.id = response_data["id"]
+    # test_user.id = response_data["id"]
     return test_user
 
 @pytest.fixture
